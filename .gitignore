@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+dist/
+build/
+
+# Environment files (all of them, at any level — never commit secrets)
+.env
+**/.env
+!**/.env.example
+
+# Database dumps and exports
+*.sql
+exports/
+
+# Keys and certificates
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Logs
+*.log
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+venv/
+.venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

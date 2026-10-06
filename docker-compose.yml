@@ -1,0 +1,36 @@
+name: wedding-face-search
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    environment:
+      - IMMICH_URL=http://immich_server:2283
+      - IMMICH_API_KEY=${IMMICH_API_KEY}
+      - IMMICH_ML_URL=http://immich_machine_learning:3003
+      - DB_HOST=immich_postgres
+      - DB_PORT=5432
+      - DB_NAME=immich
+      - DB_USER=postgres
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+      - FACE_MATCH_THRESHOLD=${FACE_MATCH_THRESHOLD:-0.55}
+      - MIN_DETECTION_SCORE=${MIN_DETECTION_SCORE:-0.3}
+      - COUPLE_PERSON_IDS=${COUPLE_PERSON_IDS:-}
+    networks:
+      - immich_default
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      - backend
+    networks:
+      - immich_default
+    restart: unless-stopped
+
+networks:
+  immich_default:
+    external: true
